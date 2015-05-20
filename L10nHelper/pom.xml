@@ -92,9 +92,7 @@
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
-                    <compilerArguments>
-                        <endorseddirs>${endorsed.dir}</endorseddirs>
-                    </compilerArguments>
+                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
             <plugin>
