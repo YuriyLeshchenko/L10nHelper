@@ -8,8 +8,9 @@
             <title>L10N Helper</title>
         </h:head>
         <h:body>
+            <h:outputStylesheet library="default" name="css/elements.css"/>
             <h:form id="contentForm" prependId="true">
-                <h2>L10N Helper</h2>
+                <br/><h1>L10N Helper</h1><br/>
                 <p:growl id="growl" showDetail="false" life="2000"/>
                 <h:panelGroup layout="block">
                     <p:fileUpload id="fileUpload" fileUploadListener="#{fileUploader.uploadFile}"
