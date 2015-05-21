@@ -22,11 +22,12 @@
                             <p:commandButton id="processFilesButton" value="Process files"
                                              actionListener="#{fileUploader.processFiles()}"
                                              disabled="#{empty fileUploader.uploadedFiles}"
-                                             process="@this" update=":contentForm:propertyFilesTable :contentForm:growl"/>
+                                             process="@this" update=":contentForm:localizationTable :contentForm:growl"/>
                             <p:commandButton id="removeFilesButton" value="Remove files"
                                              actionListener="#{fileUploader.removeFiles()}"
                                              disabled="#{empty fileUploader.uploadedFiles}"
-                                             process="@this" update="@this processFilesButton uploadedFilesTable :contentForm:growl"/>
+                                             process="@this" update="@this processFilesButton uploadedFilesTable
+                                             :contentForm:localizationTable :contentForm:growl"/>
                         </f:facet>
                         <p:column headerText="File Name">
                             <h:outputText value="#{file.fileName}"/>
@@ -36,7 +37,7 @@
                         </p:column>
                     </p:dataTable>
                     <br/>
-                    <p:dataTable id="propertyFilesTable" value="#{fileUploader.localizationTable}" var="row"
+                    <p:dataTable id="localizationTable" value="#{fileUploader.localizationTable}" var="row"
                                  paginator="true" paginatorPosition="both" pageLinks="10"
                                  rows="50" rowsPerPageTemplate="50, 100, 500, 1000"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PageLinks} {LastPageLink} {RowsPerPageDropdown}"

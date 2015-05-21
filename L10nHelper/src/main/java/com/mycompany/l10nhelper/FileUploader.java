@@ -53,6 +53,8 @@ public class FileUploader implements Serializable {
 
     public void removeFiles() {
         uploadedFiles.clear();
+        languageFiles.clear();
+        localizationTable.clear();
     }
 
     public static Properties doPropertyFile(UploadedFile file) {
