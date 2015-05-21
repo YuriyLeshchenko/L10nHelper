@@ -6,3 +6,7 @@
 #contentForm {
     font-size: 13px;
 }
+
+.ui-column-filter.ui-inputfield {
+    width: 80%;
+}
