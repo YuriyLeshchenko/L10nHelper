@@ -18,7 +18,7 @@ import org.primefaces.model.UploadedFile;
 
 @Named
 @SessionScoped
-public class FileUploader implements Serializable {
+public class L10nHelper implements Serializable {
 
     private final int FILES_LIMIT = 3;
     private final String ENGLISH_FILE_NAME = "locale-messages.properties";

@@ -13,15 +13,15 @@
                 <br/><h1>L10N Helper</h1><br/>
                 <p:growl id="growl" showDetail="false" life="2000"/>
                 <h:panelGroup layout="block">
-                    <p:fileUpload id="fileUpload" fileUploadListener="#{fileUploader.uploadFile}"
-                                  mode="advanced" multiple="true" fileLimit="#{fileUploader.filesLimit}" dragDropSupport="true"
+                    <p:fileUpload id="fileUpload" fileUploadListener="#{l10nHelper.uploadFile}"
+                                  mode="advanced" multiple="true" fileLimit="#{l10nHelper.filesLimit}" dragDropSupport="true"
                                   process="@this" update="@this uploadedFilesTable :contentForm:localizationTable :contentForm:growl"
                                   sizeLimit="1000000" allowTypes="/(\.|\/)(properties)$/"/>
-                    <p:dataTable id="uploadedFilesTable" value="#{fileUploader.uploadedFiles}" var="file">
+                    <p:dataTable id="uploadedFilesTable" value="#{l10nHelper.uploadedFiles}" var="file">
                         <f:facet name="header">
                             <p:commandButton id="removeFilesButton" value="Remove files"
-                                             actionListener="#{fileUploader.removeFiles()}"
-                                             disabled="#{empty fileUploader.uploadedFiles}"
+                                             actionListener="#{l10nHelper.removeFiles()}"
+                                             disabled="#{empty l10nHelper.uploadedFiles}"
                                              process="@this" update="@this uploadedFilesTable
                                              :contentForm:localizationTable :contentForm:growl"/>
                         </f:facet>
@@ -33,11 +33,11 @@
                         </p:column>
                     </p:dataTable>
                     <br/>
-                    <p:dataTable id="localizationTable" value="#{fileUploader.localizationTable}" var="row"
+                    <p:dataTable id="localizationTable" value="#{l10nHelper.localizationTable}" var="row"
                                  paginator="true" paginatorPosition="both" pageLinks="10"
                                  rows="50" rowsPerPageTemplate="10, 50, 100, 500, 1000"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PageLinks} {LastPageLink} {RowsPerPageDropdown}"
-                                 filteredValue="#{fileUploader.filteredRows}"
+                                 filteredValue="#{l10nHelper.filteredRows}"
                                  sortBy="#{row.key}">
                         <f:facet name="header">
                             <h3><h:outputText value="Localization table"/></h3>
