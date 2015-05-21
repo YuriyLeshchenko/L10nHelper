@@ -21,7 +21,7 @@
                             <p:commandButton id="processFilesButton" value="Process files"
                                              actionListener="#{fileUploader.processFiles()}"
                                              disabled="#{empty fileUploader.uploadedFiles}"
-                                             process="@this" update=":contentForm:growl"/>
+                                             process="@this" update=":contentForm:propertyFilesTable :contentForm:growl"/>
                             <p:commandButton id="removeFilesButton" value="Remove files"
                                              actionListener="#{fileUploader.removeFiles()}"
                                              disabled="#{empty fileUploader.uploadedFiles}"
@@ -32,6 +32,25 @@
                         </p:column>
                         <p:column headerText="File Size">
                             <h:outputText value="#{file.size} KB"/>
+                        </p:column>
+                    </p:dataTable>
+                    <br/>
+                    <p:dataTable id="propertyFilesTable" value="#{fileUploader.localizationTable}" var="row"
+                                 paginator="true" paginatorPosition="both" pageLinks="10"
+                                 rows="50" rowsPerPageTemplate="50, 100, 500, 1000"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PageLinks} {LastPageLink} {RowsPerPageDropdown}"
+                                 sortBy="#{row.key}">
+                        <p:column sortBy="#{row.key}" headerText="Key">
+                            <h:outputText value="#{row.key}"/>
+                        </p:column>
+                        <p:column sortBy="#{row.enValue}" headerText="EN">
+                            <h:outputText value="#{row.enValue}"/>
+                        </p:column>
+                        <p:column sortBy="#{row.esValue}" headerText="ES">
+                            <h:outputText value="#{row.esValue}"/>
+                        </p:column>
+                        <p:column sortBy="#{row.ruValue}" headerText="RU">
+                            <h:outputText value="#{row.ruValue}"/>
                         </p:column>
                     </p:dataTable>
                 </h:panelGroup>
