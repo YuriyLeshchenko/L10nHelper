@@ -27,6 +27,7 @@ public class FileUploader implements Serializable {
     private List<UploadedFile> uploadedFiles;
     private List<LanguageFile> languageFiles;
     private List<LocalizationTableRow> localizationTable;
+    private List<LocalizationTableRow> filteredRows;
     private Properties fileOfEnglish;
     private Properties fileOfSpanish;
     private Properties fileOfRussian;
@@ -115,5 +116,13 @@ public class FileUploader implements Serializable {
 
     public List<LocalizationTableRow> getLocalizationTable() {
         return localizationTable;
+    }
+
+    public List<LocalizationTableRow> getFilteredRows() {
+        return filteredRows;
+    }
+
+    public void setFilteredRows(List<LocalizationTableRow> filteredRows) {
+        this.filteredRows = filteredRows;
     }
 }

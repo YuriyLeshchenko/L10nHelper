@@ -40,17 +40,21 @@
                                  paginator="true" paginatorPosition="both" pageLinks="10"
                                  rows="50" rowsPerPageTemplate="50, 100, 500, 1000"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PageLinks} {LastPageLink} {RowsPerPageDropdown}"
+                                 filteredValue="#{fileUploader.filteredRows}"
                                  sortBy="#{row.key}">
-                        <p:column sortBy="#{row.key}" headerText="Key">
+                        <f:facet name="header">
+                            <h3><h:outputText value="Localization table"/></h3>
+                        </f:facet>
+                        <p:column filterBy="#{row.key}" sortBy="#{row.key}" headerText="Key">
                             <h:outputText value="#{row.key}"/>
                         </p:column>
-                        <p:column sortBy="#{row.enValue}" headerText="EN">
+                        <p:column filterBy="#{row.enValue}" sortBy="#{row.enValue}" headerText="EN">
                             <h:outputText value="#{row.enValue}"/>
                         </p:column>
-                        <p:column sortBy="#{row.esValue}" headerText="ES">
+                        <p:column filterBy="#{row.esValue}" sortBy="#{row.esValue}" headerText="ES">
                             <h:outputText value="#{row.esValue}"/>
                         </p:column>
-                        <p:column sortBy="#{row.ruValue}" headerText="RU">
+                        <p:column filterBy="#{row.ruValue}" sortBy="#{row.ruValue}" headerText="RU">
                             <h:outputText value="#{row.ruValue}"/>
                         </p:column>
                     </p:dataTable>
