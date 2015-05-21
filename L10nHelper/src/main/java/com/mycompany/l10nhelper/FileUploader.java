@@ -40,8 +40,11 @@ public class FileUploader implements Serializable {
 
     public void uploadFile(FileUploadEvent event) {
         uploadedFiles.add(event.getFile());
-        FacesMessage message = new FacesMessage("Files have been successfully uploaded.");
-        FacesContext.getCurrentInstance().addMessage(null, message);
+        if (uploadedFiles.size() == FILES_LIMIT) {
+            processFiles();
+            FacesMessage message = new FacesMessage("Files have been successfully uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
     }
 
     public void processFiles() {

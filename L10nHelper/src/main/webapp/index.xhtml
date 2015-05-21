@@ -15,18 +15,14 @@
                 <h:panelGroup layout="block">
                     <p:fileUpload id="fileUpload" fileUploadListener="#{fileUploader.uploadFile}"
                                   mode="advanced" multiple="true" fileLimit="#{fileUploader.filesLimit}" dragDropSupport="true"
-                                  process="@this" update="@this uploadedFilesTable :contentForm:growl" sizeLimit="1000000"
-                                  allowTypes="/(\.|\/)(properties)$/"/>
+                                  process="@this" update="@this uploadedFilesTable :contentForm:localizationTable :contentForm:growl"
+                                  sizeLimit="1000000" allowTypes="/(\.|\/)(properties)$/"/>
                     <p:dataTable id="uploadedFilesTable" value="#{fileUploader.uploadedFiles}" var="file">
                         <f:facet name="header">
-                            <p:commandButton id="processFilesButton" value="Process files"
-                                             actionListener="#{fileUploader.processFiles()}"
-                                             disabled="#{empty fileUploader.uploadedFiles}"
-                                             process="@this" update=":contentForm:localizationTable :contentForm:growl"/>
                             <p:commandButton id="removeFilesButton" value="Remove files"
                                              actionListener="#{fileUploader.removeFiles()}"
                                              disabled="#{empty fileUploader.uploadedFiles}"
-                                             process="@this" update="@this processFilesButton uploadedFilesTable
+                                             process="@this" update="@this uploadedFilesTable
                                              :contentForm:localizationTable :contentForm:growl"/>
                         </f:facet>
                         <p:column headerText="File Name">
@@ -39,7 +35,7 @@
                     <br/>
                     <p:dataTable id="localizationTable" value="#{fileUploader.localizationTable}" var="row"
                                  paginator="true" paginatorPosition="both" pageLinks="10"
-                                 rows="50" rowsPerPageTemplate="50, 100, 500, 1000"
+                                 rows="50" rowsPerPageTemplate="10, 50, 100, 500, 1000"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PageLinks} {LastPageLink} {RowsPerPageDropdown}"
                                  filteredValue="#{fileUploader.filteredRows}"
                                  sortBy="#{row.key}">
