@@ -14,26 +14,30 @@
                 <p:growl id="growl" showDetail="false" life="2000"/>
                 <h:panelGroup layout="block">
                     <p:fileUpload id="fileUpload" fileUploadListener="#{l10nHelper.uploadFile}"
+                                  disabled="#{not empty localizationTable.languageFiles}"
                                   mode="advanced" multiple="true" fileLimit="#{l10nHelper.filesLimit}" dragDropSupport="true"
-                                  process="@this" update="@this uploadedFilesTable :contentForm:localizationTable :contentForm:growl"
+                                  process="@this" update="@this uploadedFilesTable localizationTable :contentForm:growl"
                                   sizeLimit="1000000" allowTypes="/(\.|\/)(properties)$/"/>
-                    <p:dataTable id="uploadedFilesTable" value="#{l10nHelper.uploadedFiles}" var="file">
+                    <p:dataTable id="uploadedFilesTable" value="#{localizationTable.languageFiles}" var="file">
                         <f:facet name="header">
                             <p:commandButton id="removeFilesButton" value="Remove files"
                                              actionListener="#{l10nHelper.removeFiles()}"
-                                             disabled="#{empty l10nHelper.uploadedFiles}"
-                                             process="@this" update="@this uploadedFilesTable
+                                             disabled="#{empty localizationTable.languageFiles}"
+                                             process="@this" update="@this uploadedFilesTable :contentForm:fileUpload
                                              :contentForm:localizationTable :contentForm:growl"/>
                         </f:facet>
                         <p:column headerText="File Name">
                             <h:outputText value="#{file.fileName}"/>
                         </p:column>
                         <p:column headerText="File Size">
-                            <h:outputText value="#{file.size} KB"/>
+                            <h:outputText value="#{file.fileSize} KB"/>
+                        </p:column>
+                        <p:column headerText="Translations">
+                            <h:outputText value="#{file.keysCount}"/>
                         </p:column>
                     </p:dataTable>
                     <br/>
-                    <p:dataTable id="localizationTable" value="#{l10nHelper.localizationTable}" var="row"
+                    <p:dataTable id="localizationTable" value="#{localizationTable.localizationTableRows}" var="row"
                                  paginator="true" paginatorPosition="both" pageLinks="10"
                                  rows="50" rowsPerPageTemplate="10, 50, 100, 500, 1000"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PageLinks} {LastPageLink} {RowsPerPageDropdown}"
