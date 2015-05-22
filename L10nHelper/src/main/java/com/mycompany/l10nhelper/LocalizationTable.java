@@ -16,6 +16,7 @@ public class LocalizationTable implements Serializable {
     private LanguageFile fileOfEnglish;
     private LanguageFile fileOfSpanish;
     private LanguageFile fileOfRussian;
+    private LanguageFile fileOfArabic;
     private List<LanguageFile> languageFiles;
     private List<LocalizationTableRow> localizationTableRows;
 
@@ -40,7 +41,8 @@ public class LocalizationTable implements Serializable {
             String enValue = fileOfEnglish.getLanguageFile().getProperty(keyAsString);
             String esValue = fileOfSpanish.getLanguageFile().getProperty(keyAsString);
             String ruValue = fileOfRussian.getLanguageFile().getProperty(keyAsString);
-            localizationTableRows.add(new LocalizationTableRow(keyAsString, enValue, esValue, ruValue));
+            String arValue = fileOfArabic.getLanguageFile().getProperty(keyAsString);
+            localizationTableRows.add(new LocalizationTableRow(keyAsString, enValue, esValue, ruValue, arValue));
         }
     }
 
@@ -52,6 +54,8 @@ public class LocalizationTable implements Serializable {
                 return fileOfSpanish;
             case RU:
                 return fileOfRussian;
+            case AR:
+                return fileOfRussian;
             default:
                 return null;
         }
@@ -61,6 +65,7 @@ public class LocalizationTable implements Serializable {
         fileOfEnglish = null;
         fileOfSpanish = null;
         fileOfRussian = null;
+        fileOfArabic = null;
         languageFiles = new ArrayList<>();
         localizationTableRows = new ArrayList<>();
     }
@@ -77,6 +82,10 @@ public class LocalizationTable implements Serializable {
         this.fileOfRussian = fileOfRussian;
     }
 
+    public void setFileOfArabic(LanguageFile fileOfArabic) {
+        this.fileOfArabic = fileOfArabic;
+    }
+
     public List<LanguageFile> getLanguageFiles() {
         languageFiles.clear();
         if (fileOfEnglish != null) {
@@ -87,6 +96,9 @@ public class LocalizationTable implements Serializable {
         }
         if (fileOfRussian != null) {
             languageFiles.add(fileOfRussian);
+        }
+        if (fileOfArabic != null) {
+            languageFiles.add(fileOfArabic);
         }
         return languageFiles;
     }

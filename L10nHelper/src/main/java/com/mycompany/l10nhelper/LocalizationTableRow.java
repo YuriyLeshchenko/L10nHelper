@@ -6,12 +6,14 @@ public class LocalizationTableRow {
     private String enValue;
     private String esValue;
     private String ruValue;
+    private String arValue;
 
-    public LocalizationTableRow(String key, String enValue, String esValue, String ruValue) {
+    public LocalizationTableRow(String key, String enValue, String esValue, String ruValue, String arValue) {
         this.key = key;
         this.enValue = enValue;
         this.esValue = esValue;
         this.ruValue = ruValue;
+        this.arValue = arValue;
     }
 
     public String getKey() {
@@ -44,5 +46,13 @@ public class LocalizationTableRow {
 
     public void setRuValue(String ruValue) {
         this.ruValue = ruValue;
+    }
+
+    public String getArValue() {
+        return arValue;
+    }
+
+    public void setArValue(String arValue) {
+        this.arValue = arValue;
     }
 }

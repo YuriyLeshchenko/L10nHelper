@@ -19,10 +19,11 @@ import org.primefaces.model.UploadedFile;
 @SessionScoped
 public class L10nHelper implements Serializable {
 
-    private final int FILES_LIMIT = 3;
+    private final int FILES_LIMIT = 4;
     private final String ENGLISH_FILE_NAME = "locale-messages.properties";
     private final String SPANISH_FILE_NAME = "locale-messages_es.properties";
     private final String RUSSIAN_FILE_NAME = "locale-messages_ru.properties";
+    private final String ARABIC_FILE_NAME = "locale-messages_ar.properties";
     private List<UploadedFile> uploadedFiles;
     private List<LocalizationTableRow> filteredRows;
     @Inject
@@ -77,6 +78,9 @@ public class L10nHelper implements Serializable {
         }
         if (fileName.equals(RUSSIAN_FILE_NAME)) {
             localizationTable.setFileOfRussian(new LanguageFile(propFile, file.getFileName(), file.getSize(), propFile.keySet().size(), Language.RU));
+        }
+        if (fileName.equals(ARABIC_FILE_NAME)) {
+            localizationTable.setFileOfArabic(new LanguageFile(propFile, file.getFileName(), file.getSize(), propFile.keySet().size(), Language.RU));
         }
     }
 

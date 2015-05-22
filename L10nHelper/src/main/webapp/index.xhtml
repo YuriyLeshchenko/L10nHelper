@@ -59,6 +59,9 @@
                         <p:column filterBy="#{row.ruValue}" sortBy="#{row.ruValue}" headerText="RU">
                             <h:outputText value="#{row.ruValue}"/>
                         </p:column>
+                        <p:column filterBy="#{row.arValue}" sortBy="#{row.arValue}" headerText="AR">
+                            <h:outputText value="#{row.arValue}"/>
+                        </p:column>
                     </p:dataTable>
                     <br/>
                     <p:commandButton id="analyzeButton" value="Analyze"
@@ -70,6 +73,7 @@
                         <f:selectItem itemLabel="EN" itemValue="EN"/>
                         <f:selectItem itemLabel="ES" itemValue="ES"/>
                         <f:selectItem itemLabel="RU" itemValue="RU"/>
+                        <f:selectItem itemLabel="AR" itemValue="AR"/>
                         <p:ajax update="@this :contentForm:growl" listener="#{localizationAnalyzer.analyze()}"/>
                     </p:selectOneMenu>
                     <br/>
@@ -97,6 +101,9 @@
                                 </p:column>
                                 <p:column headerText="RU">
                                     <h:outputText value="#{row.ruValue}"/>
+                                </p:column>
+                                <p:column headerText="AR">
+                                    <h:outputText value="#{row.arValue}"/>
                                 </p:column>
                             </p:dataTable>
                         </p:rowExpansion>

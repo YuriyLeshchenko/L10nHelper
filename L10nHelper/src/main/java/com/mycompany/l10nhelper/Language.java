@@ -7,7 +7,8 @@ public enum Language {
 
     EN(0),
     ES(1),
-    RU(2);
+    RU(2),
+    AR(3);
     private final int id;
 
     private Language(int id) {
@@ -19,6 +20,6 @@ public enum Language {
     }
 
     public static List<Integer> getSupportedLanguages() {
-        return Arrays.asList(EN.id, ES.id, RU.id);
+        return Arrays.asList(EN.id, ES.id, RU.id, AR.id);
     }
 }
