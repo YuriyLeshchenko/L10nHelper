@@ -28,7 +28,7 @@ public class LocalizationTable implements Serializable {
     public void buildLocalizationTable() {
         Set<Object> keys = new HashSet<>();
         int maxKeysCount = 0;
-        for (LanguageFile languageFile : languageFiles) {
+        for (LanguageFile languageFile : getLanguageFiles()) {
             if (languageFile.getLanguageFile().keySet().size() > maxKeysCount) {
                 keys = languageFile.getLanguageFile().keySet();
                 maxKeysCount = languageFile.getLanguageFile().keySet().size();
