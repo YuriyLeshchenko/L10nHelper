@@ -12,11 +12,11 @@
             <h:form id="contentForm" prependId="true">
                 <br/><h1>L10N Helper</h1><br/>
                 <p:growl id="growl" showDetail="false" life="2000"/>
-                <h:panelGroup layout="block">
+                <h:panelGroup layout="block" style="margin-bottom: 200px">
                     <p:fileUpload id="fileUpload" fileUploadListener="#{l10nHelper.uploadFile}"
                                   disabled="#{not empty localizationTable.languageFiles}"
                                   mode="advanced" multiple="true" fileLimit="#{l10nHelper.filesLimit}" dragDropSupport="true"
-                                  process="@this" update="@this uploadedFilesTable localizationTable :contentForm:growl"
+                                  process="@this" update="@this uploadedFilesTable localizationTable analyzeButton languageSelect :contentForm:growl"
                                   sizeLimit="1000000" allowTypes="/(\.|\/)(properties)$/"/>
                     <p:dataTable id="uploadedFilesTable" value="#{localizationTable.languageFiles}" var="file">
                         <f:facet name="header">
@@ -24,7 +24,8 @@
                                              actionListener="#{l10nHelper.removeFiles()}"
                                              disabled="#{empty localizationTable.languageFiles}"
                                              process="@this" update="@this uploadedFilesTable :contentForm:fileUpload
-                                             :contentForm:localizationTable :contentForm:growl"/>
+                                             :contentForm:localizationTable :contentForm:analyzeButton
+                                             :contentForm:languageSelect :contentForm:growl"/>
                         </f:facet>
                         <p:column headerText="File Name">
                             <h:outputText value="#{file.fileName}"/>
@@ -58,6 +59,47 @@
                         <p:column filterBy="#{row.ruValue}" sortBy="#{row.ruValue}" headerText="RU">
                             <h:outputText value="#{row.ruValue}"/>
                         </p:column>
+                    </p:dataTable>
+                    <br/>
+                    <p:commandButton id="analyzeButton" value="Analyze"
+                                     actionListener="#{localizationAnalyzer.analyze()}"
+                                     disabled="#{empty localizationTable.languageFiles}"
+                                     process="@this" update="@this identicalValuesTable :contentForm:growl"/>
+                    <p:selectOneMenu id="languageSelect" value="#{localizationAnalyzer.selectedLanguage}"
+                                     disabled="#{empty localizationTable.languageFiles}">
+                        <f:selectItem itemLabel="EN" itemValue="EN"/>
+                        <f:selectItem itemLabel="ES" itemValue="ES"/>
+                        <f:selectItem itemLabel="RU" itemValue="RU"/>
+                        <p:ajax update="@this :contentForm:growl" listener="#{localizationAnalyzer.analyze()}"/>
+                    </p:selectOneMenu>
+                    <br/>
+                    <p:dataTable id="identicalValuesTable" value="#{localizationAnalyzer.identicalValuesKeys}" var="key"
+                                 paginator="true" paginatorPosition="both" pageLinks="10"
+                                 rows="25" rowsPerPageTemplate="10, 25, 50, 100, 500, 1000"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PageLinks} {LastPageLink} {RowsPerPageDropdown}"
+                                 filteredValue="#{localizationAnalyzer.filteredIdenticalValues}">
+                        <p:column style="width:16px">
+                            <p:rowToggler/>
+                        </p:column>
+                        <p:column filterBy="#{key}" headerText="Value">
+                            <h:outputText value="#{key}"/>
+                        </p:column>
+                        <p:rowExpansion>
+                            <p:dataTable value="#{localizationAnalyzer.getRowByKey(key)}" var="row">
+                                <p:column sortBy="#{row.key}" headerText="Key">
+                                    <h:outputText value="#{row.key}"/>
+                                </p:column>
+                                <p:column headerText="EN">
+                                    <h:outputText value="#{row.enValue}"/>
+                                </p:column>
+                                <p:column headerText="ES">
+                                    <h:outputText value="#{row.esValue}"/>
+                                </p:column>
+                                <p:column headerText="RU">
+                                    <h:outputText value="#{row.ruValue}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </p:rowExpansion>
                     </p:dataTable>
                 </h:panelGroup>
             </h:form>

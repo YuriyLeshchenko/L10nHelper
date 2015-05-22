@@ -44,6 +44,19 @@ public class LocalizationTable implements Serializable {
         }
     }
 
+    public LanguageFile getLocalizationFileForLanguage(Language language) {
+        switch (language) {
+            case EN:
+                return fileOfEnglish;
+            case ES:
+                return fileOfSpanish;
+            case RU:
+                return fileOfRussian;
+            default:
+                return null;
+        }
+    }
+
     public void reset() {
         fileOfEnglish = null;
         fileOfSpanish = null;

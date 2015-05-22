@@ -1,5 +1,8 @@
 package com.mycompany.l10nhelper;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum Language {
 
     EN(0),
@@ -13,5 +16,9 @@ public enum Language {
 
     public int getId() {
         return id;
+    }
+
+    public static List<Integer> getSupportedLanguages() {
+        return Arrays.asList(EN.id, ES.id, RU.id);
     }
 }
