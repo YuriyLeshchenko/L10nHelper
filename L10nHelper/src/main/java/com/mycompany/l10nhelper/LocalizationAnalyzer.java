@@ -32,14 +32,20 @@ public class LocalizationAnalyzer implements Serializable {
         int rowsCount = rows.size();
         for (int rowNum = 0; rowNum < rowsCount; rowNum++) {
             LocalizationTableRow row = rows.get(rowNum);
-            String comparableValue = row.getEnValue();
+            String comparableValue = row.getValueByLanguage(selectedLanguage);
+            if (comparableValue == null) {
+                continue;
+            }
             if (identicalValues.containsKey(comparableValue.toLowerCase())) {
                 continue;
             }
             List<LocalizationTableRow> equalValues = new ArrayList<>();
             boolean sameExists = false;
             for (int v = rowNum + 1; v < rowsCount; v++) {
-                String toCompare = rows.get(v).getEnValue();
+                String toCompare = rows.get(v).getValueByLanguage(selectedLanguage);
+                if (toCompare == null) {
+                    continue;
+                }
                 if (comparableValue.toLowerCase().equals(toCompare.toLowerCase())) {
                     if (!sameExists) {
                         equalValues.add(row);

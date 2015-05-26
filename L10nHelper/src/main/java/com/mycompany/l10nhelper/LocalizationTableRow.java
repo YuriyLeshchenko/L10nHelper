@@ -16,6 +16,21 @@ public class LocalizationTableRow {
         this.arValue = arValue;
     }
 
+    public String getValueByLanguage(Language lang) {
+        switch (lang) {
+            case EN:
+                return enValue;
+            case ES:
+                return esValue;
+            case RU:
+                return ruValue;
+            case AR:
+                return arValue;
+            default:
+                return null;
+        }
+    }
+
     public String getKey() {
         return key;
     }

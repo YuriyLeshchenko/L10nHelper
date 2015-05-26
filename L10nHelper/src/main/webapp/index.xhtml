@@ -74,7 +74,7 @@
                         <f:selectItem itemLabel="ES" itemValue="ES"/>
                         <f:selectItem itemLabel="RU" itemValue="RU"/>
                         <f:selectItem itemLabel="AR" itemValue="AR"/>
-                        <p:ajax update="@this :contentForm:growl" listener="#{localizationAnalyzer.analyze()}"/>
+                        <p:ajax update="@this identicalValuesTable :contentForm:growl" listener="#{localizationAnalyzer.analyze()}"/>
                     </p:selectOneMenu>
                     <br/>
                     <p:dataTable id="identicalValuesTable" value="#{localizationAnalyzer.identicalValuesKeys}" var="key"
