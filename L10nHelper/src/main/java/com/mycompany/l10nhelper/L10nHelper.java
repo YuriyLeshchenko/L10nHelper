@@ -28,6 +28,8 @@ public class L10nHelper implements Serializable {
     private List<LocalizationTableRow> filteredRows;
     @Inject
     private LocalizationTable localizationTable;
+    @Inject
+    private LocalizationAnalyzer localizationAnalyzer;
 
     @PostConstruct
     private void init() {
@@ -53,6 +55,7 @@ public class L10nHelper implements Serializable {
     public void removeFiles() {
         uploadedFiles.clear();
         localizationTable.reset();
+        localizationAnalyzer.resetAnalyzedData();
     }
 
     public static Properties doPropertyFile(UploadedFile file) {
