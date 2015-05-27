@@ -47,7 +47,7 @@
                         <f:facet name="header">
                             <h3><h:outputText value="Localization table"/></h3>
                         </f:facet>
-                        <p:column headerText="#">
+                        <p:column headerText="#" style="width:16px">
                             <h:outputText value="#{localizationTable.localizationTableRows.indexOf(row) + 1}"/>
                         </p:column>
                         <p:column filterBy="#{row.key}" filterMatchMode="contains" sortBy="#{row.key}" headerText="Key">
@@ -96,7 +96,7 @@
                             <f:facet name="header">
                                 <h3><h:outputText value="Identities"/></h3>
                             </f:facet>
-                            <p:column headerText="#">
+                            <p:column headerText="#" style="width:16px">
                                 <h:outputText value="#{localizationAnalyzer.identicalValuesKeys.indexOf(key) + 1}"/>
                             </p:column>
                             <p:column style="width:16px">
@@ -130,7 +130,7 @@
                             <f:facet name="header">
                                 <h3><h:outputText value="Spaces"/></h3>
                             </f:facet>
-                            <p:column headerText="#">
+                            <p:column headerText="#" style="width:16px">
                                 <h:outputText value="#{localizationAnalyzer.foundRows.indexOf(row) + 1}"/>
                             </p:column>
                             <p:column headerText="Key">
