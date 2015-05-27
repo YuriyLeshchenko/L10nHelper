@@ -47,7 +47,7 @@
                         <f:facet name="header">
                             <h3><h:outputText value="Localization table"/></h3>
                         </f:facet>
-                        <p:column headerText="#" style="width:16px">
+                        <p:column headerText="#" style="width:36px">
                             <h:outputText value="#{localizationTable.localizationTableRows.indexOf(row) + 1}"/>
                         </p:column>
                         <p:column filterBy="#{row.key}" filterMatchMode="contains" sortBy="#{row.key}" headerText="Key">
