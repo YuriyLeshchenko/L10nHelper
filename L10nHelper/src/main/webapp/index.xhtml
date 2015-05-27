@@ -50,19 +50,19 @@
                         <p:column headerText="#">
                             <h:outputText value="#{localizationTable.localizationTableRows.indexOf(row) + 1}"/>
                         </p:column>
-                        <p:column filterBy="#{row.key}" sortBy="#{row.key}" headerText="Key">
+                        <p:column filterBy="#{row.key}" filterMatchMode="contains" sortBy="#{row.key}" headerText="Key">
                             <h:outputText value="#{row.key}"/>
                         </p:column>
-                        <p:column filterBy="#{row.enValue}" sortBy="#{row.enValue}" headerText="EN">
+                        <p:column filterBy="#{row.enValue}" filterMatchMode="contains" sortBy="#{row.enValue}" headerText="EN">
                             <h:outputText value="#{row.enValue}"/>
                         </p:column>
-                        <p:column filterBy="#{row.esValue}" sortBy="#{row.esValue}" headerText="ES">
+                        <p:column filterBy="#{row.esValue}" filterMatchMode="contains" sortBy="#{row.esValue}" headerText="ES">
                             <h:outputText value="#{row.esValue}"/>
                         </p:column>
-                        <p:column filterBy="#{row.ruValue}" sortBy="#{row.ruValue}" headerText="RU">
+                        <p:column filterBy="#{row.ruValue}" filterMatchMode="contains" sortBy="#{row.ruValue}" headerText="RU">
                             <h:outputText value="#{row.ruValue}"/>
                         </p:column>
-                        <p:column filterBy="#{row.arValue}" sortBy="#{row.arValue}" headerText="AR">
+                        <p:column filterBy="#{row.arValue}" filterMatchMode="contains" sortBy="#{row.arValue}" headerText="AR">
                             <h:outputText value="#{row.arValue}"/>
                         </p:column>
                     </p:dataTable>
