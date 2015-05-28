@@ -16,7 +16,7 @@
                     <p:fileUpload id="fileUpload" fileUploadListener="#{l10nHelper.uploadFile}"
                                   disabled="#{not empty localizationTable.languageFiles}"
                                   mode="advanced" multiple="true" fileLimit="#{l10nHelper.filesLimit}" dragDropSupport="true"
-                                  process="@this" update="@this uploadedFilesTable localizationTable analyzeButton languageSelect searchTypeSelect :contentForm:growl"
+                                  process="@this" update="@this saveButtonsPanel uploadedFilesTable localizationTable analyzeButton languageSelect searchTypeSelect :contentForm:growl"
                                   sizeLimit="1000000" allowTypes="/(\.|\/)(properties)$/"/>
                     <p:dataTable id="uploadedFilesTable" value="#{localizationTable.languageFiles}" var="file">
                         <f:facet name="header">
@@ -37,6 +37,21 @@
                             <h:outputText value="#{file.keysCount}"/>
                         </p:column>
                     </p:dataTable>
+                    <br/>
+                    <h:panelGroup id="saveButtonsPanel" layout="block">
+                        <h:commandButton value="Save EN" disabled="#{empty localizationTable.languageFiles}" styleClass="hButton">
+                            <p:fileDownload value="#{fileManager.englishFile}"/>
+                        </h:commandButton>
+                        <h:commandButton value="Save ES" disabled="#{empty localizationTable.languageFiles}" styleClass="hButton">
+                            <p:fileDownload value="#{fileManager.spanishFile}"/>
+                        </h:commandButton>
+                        <h:commandButton value="Save RU" disabled="#{empty localizationTable.languageFiles}" styleClass="hButton">
+                            <p:fileDownload value="#{fileManager.russianFile}"/>
+                        </h:commandButton>
+                        <h:commandButton value="Save AR" disabled="#{empty localizationTable.languageFiles}" styleClass="hButton">
+                            <p:fileDownload value="#{fileManager.arabicFile}"/>
+                        </h:commandButton>
+                    </h:panelGroup>
                     <br/>
                     <p:dataTable id="localizationTable" value="#{localizationTable.localizationTableRows}" var="row"
                                  paginator="true" paginatorPosition="both" pageLinks="10"

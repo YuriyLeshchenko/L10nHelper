@@ -20,10 +20,6 @@ import org.primefaces.model.UploadedFile;
 public class L10nHelper implements Serializable {
 
     private final int FILES_LIMIT = 4;
-    private final String ENGLISH_FILE_NAME = "locale-messages.properties";
-    private final String SPANISH_FILE_NAME = "locale-messages_es.properties";
-    private final String RUSSIAN_FILE_NAME = "locale-messages_ru.properties";
-    private final String ARABIC_FILE_NAME = "locale-messages_ar.properties";
     private List<UploadedFile> uploadedFiles;
     private List<LocalizationTableRow> filteredRows;
     @Inject
@@ -71,19 +67,19 @@ public class L10nHelper implements Serializable {
     private void recognizeLanguageFile(UploadedFile file) {
         String fileName = file.getFileName();
         Properties propFile = doPropertyFile(file);
-        if (fileName.equals(ENGLISH_FILE_NAME)) {
-            localizationTable.setFileOfEnglish(new LanguageFile(propFile, file.getFileName(), file.getSize(), propFile.keySet().size(), Language.EN));
+        if (fileName.equals(Language.ENGLISH_FILE_NAME)) {
+            localizationTable.setFileOfEnglish(new LanguageFile(file, propFile, file.getFileName(), file.getSize(), propFile.keySet().size(), Language.EN));
             return;
         }
-        if (fileName.equals(SPANISH_FILE_NAME)) {
-            localizationTable.setFileOfSpanish(new LanguageFile(propFile, file.getFileName(), file.getSize(), propFile.keySet().size(), Language.ES));
+        if (fileName.equals(Language.SPANISH_FILE_NAME)) {
+            localizationTable.setFileOfSpanish(new LanguageFile(file, propFile, file.getFileName(), file.getSize(), propFile.keySet().size(), Language.ES));
             return;
         }
-        if (fileName.equals(RUSSIAN_FILE_NAME)) {
-            localizationTable.setFileOfRussian(new LanguageFile(propFile, file.getFileName(), file.getSize(), propFile.keySet().size(), Language.RU));
+        if (fileName.equals(Language.RUSSIAN_FILE_NAME)) {
+            localizationTable.setFileOfRussian(new LanguageFile(file, propFile, file.getFileName(), file.getSize(), propFile.keySet().size(), Language.RU));
         }
-        if (fileName.equals(ARABIC_FILE_NAME)) {
-            localizationTable.setFileOfArabic(new LanguageFile(propFile, file.getFileName(), file.getSize(), propFile.keySet().size(), Language.RU));
+        if (fileName.equals(Language.ARABIC_FILE_NAME)) {
+            localizationTable.setFileOfArabic(new LanguageFile(file, propFile, file.getFileName(), file.getSize(), propFile.keySet().size(), Language.RU));
         }
     }
 

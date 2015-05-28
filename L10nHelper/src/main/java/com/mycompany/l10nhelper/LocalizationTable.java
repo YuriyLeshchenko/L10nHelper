@@ -70,16 +70,32 @@ public class LocalizationTable implements Serializable {
         localizationTableRows = new ArrayList<>();
     }
 
+    public LanguageFile getFileOfEnglish() {
+        return fileOfEnglish;
+    }
+
     public void setFileOfEnglish(LanguageFile fileOfEnglish) {
         this.fileOfEnglish = fileOfEnglish;
+    }
+
+    public LanguageFile getFileOfSpanish() {
+        return fileOfSpanish;
     }
 
     public void setFileOfSpanish(LanguageFile fileOfSpanish) {
         this.fileOfSpanish = fileOfSpanish;
     }
 
+    public LanguageFile getFileOfRussian() {
+        return fileOfRussian;
+    }
+
     public void setFileOfRussian(LanguageFile fileOfRussian) {
         this.fileOfRussian = fileOfRussian;
+    }
+
+    public LanguageFile getFileOfArabic() {
+        return fileOfArabic;
     }
 
     public void setFileOfArabic(LanguageFile fileOfArabic) {
