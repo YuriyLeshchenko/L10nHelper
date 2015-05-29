@@ -17,7 +17,7 @@ import org.primefaces.model.UploadedFile;
 
 @Named
 @SessionScoped
-public class FileManager implements Serializable {
+public class FileDownloadManager implements Serializable {
 
     @Inject
     private LocalizationTable localizationTable;

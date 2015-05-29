@@ -40,16 +40,16 @@
                     <br/>
                     <h:panelGroup id="saveButtonsPanel" layout="block">
                         <h:commandButton value="Save EN" disabled="#{empty localizationTable.languageFiles}" styleClass="hButton">
-                            <p:fileDownload value="#{fileManager.englishFile}"/>
+                            <p:fileDownload value="#{fileDownloadManager.englishFile}"/>
                         </h:commandButton>
                         <h:commandButton value="Save ES" disabled="#{empty localizationTable.languageFiles}" styleClass="hButton">
-                            <p:fileDownload value="#{fileManager.spanishFile}"/>
+                            <p:fileDownload value="#{fileDownloadManager.spanishFile}"/>
                         </h:commandButton>
                         <h:commandButton value="Save RU" disabled="#{empty localizationTable.languageFiles}" styleClass="hButton">
-                            <p:fileDownload value="#{fileManager.russianFile}"/>
+                            <p:fileDownload value="#{fileDownloadManager.russianFile}"/>
                         </h:commandButton>
                         <h:commandButton value="Save AR" disabled="#{empty localizationTable.languageFiles}" styleClass="hButton">
-                            <p:fileDownload value="#{fileManager.arabicFile}"/>
+                            <p:fileDownload value="#{fileDownloadManager.arabicFile}"/>
                         </h:commandButton>
                     </h:panelGroup>
                     <br/>
