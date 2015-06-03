@@ -1,6 +1,10 @@
 package com.mycompany.l10nhelper;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,14 +26,21 @@ public class LocalizationAnalyzer implements Serializable {
     private Map<String, List<LocalizationTableRow>> identicalValues = new HashMap<>();
     private List<LocalizationTableRow> filteredIdenticalValues;
     private List<LocalizationTableRow> foundRows;
+    private final String pathToProject = "/home/yuriy/work/mcweb/src";
+    private List<LocalizationTableRow> unusedKeys;
+    private Boolean isUsedKey;
 
     public void analyze() {
         LanguageFile languageFile = localizationTable.getLocalizationFileForLanguage(selectedLanguage);
         switch (selectedSearchType) {
             case IDENTITIES:
                 findIdenticalValues();
+                break;
             case SPACES:
                 searchSpaces();
+                break;
+            case UNUSED_KEYS:
+                findUnusedKeys();
         }
     }
 
@@ -71,8 +82,8 @@ public class LocalizationAnalyzer implements Serializable {
         foundRows = new ArrayList<>();
         for (LocalizationTableRow row : localizationTable.getLocalizationTableRows()) {
             String comparableValue = row.getValueByLanguage(selectedLanguage);
-            if (comparableValue != null &&
-                    (comparableValue.contains("  ") || comparableValue.startsWith(" ") || comparableValue.endsWith(" "))) {
+            if (comparableValue != null
+                    && (comparableValue.contains("  ") || comparableValue.startsWith(" ") || comparableValue.endsWith(" "))) {
                 String enValue = null;
                 String esValue = null;
                 String ruValue = null;
@@ -88,6 +99,44 @@ public class LocalizationAnalyzer implements Serializable {
                         arValue = row.getArValue();
                 }
                 foundRows.add(new LocalizationTableRow(row.getKey(), enValue, esValue, ruValue, arValue));
+            }
+        }
+    }
+
+    private void findUnusedKeys() {
+        unusedKeys = new ArrayList<>();
+        for (LocalizationTableRow row : localizationTable.getLocalizationTableRows()) {
+            if (!row.getKey().contains(".") && !row.getKey().startsWith("menu_") && !row.getKey().startsWith("email_")) {
+                try {
+                    isUsedKey = false;
+                    searchUnusedKeys(pathToProject, row.getKey());
+                    if (!isUsedKey) {
+                        unusedKeys.add(row);
+                        System.out.println(row.getKey());
+                    }
+                } catch (IOException ex) {
+                    System.out.println("Error in findUnusedKeys();");
+                }
+            }
+        }
+    }
+
+    private void searchUnusedKeys(String path, String key) throws IOException {
+        File mainDir = new File(path);
+        File[] list = mainDir.listFiles();
+        if (list != null) {
+            for (File f : list) {
+                if (f.isFile() && (f.getName().endsWith(".java") || f.getName().endsWith(".xhtml"))) {
+                    String fileContent = new String(Files.readAllBytes(Paths.get(f.getCanonicalPath())), "UTF-8");
+                    if (fileContent.contains(key + "\"") || fileContent.contains(key + "}")) {
+                        isUsedKey = true;
+                    }
+                } else {
+                    searchUnusedKeys(f.getCanonicalPath(), key);
+                }
+                if (isUsedKey) {
+                    return;
+                }
             }
         }
     }
@@ -139,16 +188,7 @@ public class LocalizationAnalyzer implements Serializable {
         return foundRows;
     }
 
-    public static class Key {
-
-        private final String key;
-
-        public Key(String key) {
-            this.key = key;
-        }
-
-        public String getKey() {
-            return key;
-        }
+    public List<LocalizationTableRow> getUnusedKeys() {
+        return unusedKeys;
     }
 }
