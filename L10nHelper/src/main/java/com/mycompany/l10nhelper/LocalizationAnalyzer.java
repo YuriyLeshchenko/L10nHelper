@@ -128,7 +128,7 @@ public class LocalizationAnalyzer implements Serializable {
             for (File f : list) {
                 if (f.isFile() && (f.getName().endsWith(".java") || f.getName().endsWith(".xhtml"))) {
                     String fileContent = new String(Files.readAllBytes(Paths.get(f.getCanonicalPath())), "UTF-8");
-                    if (fileContent.contains(key + "\"") || fileContent.contains(key + "}")) {
+                    if (fileContent.contains(key)) {
                         isUsedKey = true;
                     }
                 } else {

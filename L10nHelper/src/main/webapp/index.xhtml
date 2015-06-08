@@ -10,6 +10,12 @@
         <h:body>
             <h:outputStylesheet library="default" name="css/elements.css"/>
             <h:form id="contentForm" prependId="true">
+                <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+                <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false"
+                          resizable="false" showHeader="false">
+                    <p:graphicImage name="default/images/ajax-loader.gif"/>
+                </p:dialog>
+
                 <br/><h1>L10N Helper</h1><br/>
                 <p:growl id="growl" showDetail="false" life="2000"/>
                 <h:panelGroup layout="block" style="margin-bottom: 200px">
@@ -172,14 +178,15 @@
                                      rendered="#{localizationAnalyzer.selectedSearchType == 'UNUSED_KEYS'}"
                                      paginator="true" paginatorPosition="both" pageLinks="10"
                                      rows="25" rowsPerPageTemplate="10, 25, 50, 100, 500"
-                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PageLinks} {LastPageLink} {RowsPerPageDropdown}">
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PageLinks} {LastPageLink} {RowsPerPageDropdown}"
+                                     sortBy="#{row.key}">
                             <f:facet name="header">
                                 <h3><h:outputText value="Unused keys"/></h3>
                             </f:facet>
                             <p:column headerText="#" style="width:16px">
                                 <h:outputText value="#{localizationAnalyzer.unusedKeys.indexOf(row) + 1}"/>
                             </p:column>
-                            <p:column headerText="Key">
+                            <p:column sortBy="#{row.key}" headerText="Key">
                                 <h:outputText value="#{row.key}"/>
                             </p:column>
                             <p:column headerText="EN">
