@@ -6,26 +6,47 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <ui:composition>
-        <p:commandButton id="analyzeButton" value="Analyze"
-                         actionListener="#{localizationAnalyzer.analyze()}"
-                         process="@this" update="@this identicalValuesTable :contentForm:growl"/>
-        <p:selectOneMenu id="searchTypeSelect" value="#{localizationAnalyzer.selectedSearchType}"
-                         disabled="#{empty localizationTable.languageFiles}">
-            <f:selectItem itemLabel="Identities" itemValue="IDENTITIES"/>
-            <f:selectItem itemLabel="Spaces" itemValue="SPACES"/>
-            <f:selectItem itemLabel="Unused keys" itemValue="UNUSED_KEYS"/>
-            <p:ajax update="@this searchPanel :contentForm:growl" listener="#{localizationAnalyzer.analyze()}"/>
-        </p:selectOneMenu>
-        <p:selectOneMenu id="languageSelect" value="#{localizationAnalyzer.selectedLanguage}"
-                         disabled="#{localizationAnalyzer.selectedSearchType == 'UNUSED_KEYS'}">
-            <f:selectItem itemLabel="EN" itemValue="EN"/>
-            <f:selectItem itemLabel="ES" itemValue="ES"/>
-            <f:selectItem itemLabel="RU" itemValue="RU"/>
-            <f:selectItem itemLabel="AR" itemValue="AR"/>
-            <p:ajax update="@this searchPanel :contentForm:growl" listener="#{localizationAnalyzer.analyze()}"/>
-        </p:selectOneMenu>
-        <br/>
         <p:panel id="searchPanel">
+            <p:commandButton id="analyzeButton" value="Analyze"
+                             actionListener="#{localizationAnalyzer.analyze()}"
+                             process="@this" update="@this identicalValuesTable :contentForm:growl"/>
+            <p:selectOneMenu id="searchTypeSelect" value="#{localizationAnalyzer.selectedSearchType}"
+                             disabled="#{empty localizationTable.languageFiles}">
+                <f:selectItem itemLabel="Identities" itemValue="IDENTITIES"/>
+                <f:selectItem itemLabel="Spaces" itemValue="SPACES"/>
+                <f:selectItem itemLabel="Unused keys" itemValue="UNUSED_KEYS"/>
+                <p:ajax update="@this searchPanel languageSelect :contentForm:growl" listener="#{localizationAnalyzer.analyze()}"/>
+            </p:selectOneMenu>
+            <p:selectOneMenu id="languageSelect" value="#{localizationAnalyzer.selectedLanguage}"
+                             disabled="#{localizationAnalyzer.selectedSearchType == 'UNUSED_KEYS'}">
+                <f:selectItem itemLabel="EN" itemValue="EN"/>
+                <f:selectItem itemLabel="ES" itemValue="ES"/>
+                <f:selectItem itemLabel="RU" itemValue="RU"/>
+                <f:selectItem itemLabel="AR" itemValue="AR"/>
+                <p:ajax update="@this searchPanel :contentForm:growl" listener="#{localizationAnalyzer.analyze()}"/>
+            </p:selectOneMenu>
+            <p:commandButton id="saveUpdatedButton" value="Remove unused keys"
+                             disabled="#{empty localizationAnalyzer.foundRows}"
+                             rendered="#{localizationAnalyzer.selectedSearchType == 'UNUSED_KEYS'}"
+                             actionListener="#{fileDownloadManager.removeUnusedKeys(localizationAnalyzer.foundRows)}"
+                             process="@this" update="@this searchPanel :contentForm:growl"/>
+            <h:commandButton value="Save EN" rendered="#{localizationAnalyzer.selectedSearchType == 'UNUSED_KEYS'}"
+                             disabled="#{fileDownloadManager.englishFileWithoutUnusedKeys == null}">
+                <p:fileDownload value="#{fileDownloadManager.englishFileWithoutUnusedKeys}"/>
+            </h:commandButton>
+            <h:commandButton value="Save ES" rendered="#{localizationAnalyzer.selectedSearchType == 'UNUSED_KEYS'}"
+                             disabled="#{fileDownloadManager.spanishFileWithoutUnusedKeys == null}">
+                <p:fileDownload value="#{fileDownloadManager.spanishFileWithoutUnusedKeys}"/>
+            </h:commandButton>
+            <h:commandButton value="Save RU" rendered="#{localizationAnalyzer.selectedSearchType == 'UNUSED_KEYS'}"
+                             disabled="#{fileDownloadManager.russianFileWithoutUnusedKeys == null}">
+                <p:fileDownload value="#{fileDownloadManager.russianFileWithoutUnusedKeys}"/>
+            </h:commandButton>
+            <h:commandButton value="Save AR" rendered="#{localizationAnalyzer.selectedSearchType == 'UNUSED_KEYS'}"
+                             disabled="#{fileDownloadManager.arabicFileWithoutUnusedKeys == null}">
+                <p:fileDownload value="#{fileDownloadManager.arabicFileWithoutUnusedKeys}"/>
+            </h:commandButton>
+
             <p:dataTable id="identicalValuesTable" value="#{localizationAnalyzer.identicalValuesKeys}" var="key"
                          rendered="#{localizationAnalyzer.selectedSearchType == 'IDENTITIES'}"
                          paginator="true" paginatorPosition="both" pageLinks="10"

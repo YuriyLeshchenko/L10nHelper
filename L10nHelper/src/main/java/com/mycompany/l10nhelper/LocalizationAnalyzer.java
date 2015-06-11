@@ -27,7 +27,7 @@ public class LocalizationAnalyzer implements Serializable {
     private List<LocalizationTableRow> filteredIdenticalValues;
     private List<LocalizationTableRow> foundRows;
     private final String pathToProject = "/home/yuriy/work/mcweb/src";
-    private Boolean isUsedKey;
+    private boolean isUsedKey;
 
     public void analyze() {
         LanguageFile languageFile = localizationTable.getLocalizationFileForLanguage(selectedLanguage);
