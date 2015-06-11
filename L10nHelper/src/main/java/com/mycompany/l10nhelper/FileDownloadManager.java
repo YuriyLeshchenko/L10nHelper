@@ -77,6 +77,8 @@ public class FileDownloadManager implements Serializable {
                     if (!unusedKeys.contains(key)) {
                         sortedSet.add(line);
                     }
+                } else {
+                    sortedSet.add(line);
                 }
             }
 
