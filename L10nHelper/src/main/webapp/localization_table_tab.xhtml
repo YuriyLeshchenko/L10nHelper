@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        <p:dataTable id="localizationTable" value="#{localizationTable.localizationTableRows}" var="row"
+                     paginator="true" paginatorPosition="both" pageLinks="10"
+                     rows="25" rowsPerPageTemplate="10, 25, 50, 100, 500"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PageLinks} {LastPageLink} {RowsPerPageDropdown}"
+                     filteredValue="#{l10nHelper.filteredRows}"
+                     resizableColumns="true"
+                     sortBy="#{row.key}">
+            <f:facet name="header">
+                <h3><h:outputText value="Localization table"/></h3>
+            </f:facet>
+            <p:column headerText="#" style="width:36px">
+                <h:outputText value="#{localizationTable.localizationTableRows.indexOf(row) + 1}"/>
+            </p:column>
+            <p:column filterBy="#{row.key}" filterMatchMode="contains" sortBy="#{row.key}" headerText="Key">
+                <h:outputText value="#{row.key}"/>
+            </p:column>
+            <p:column filterBy="#{row.enValue}" filterMatchMode="contains" sortBy="#{row.enValue}" headerText="EN">
+                <h:outputText value="#{row.enValue}"/>
+            </p:column>
+            <p:column filterBy="#{row.esValue}" filterMatchMode="contains" sortBy="#{row.esValue}" headerText="ES">
+                <h:outputText value="#{row.esValue}"/>
+            </p:column>
+            <p:column filterBy="#{row.ruValue}" filterMatchMode="contains" sortBy="#{row.ruValue}" headerText="RU">
+                <h:outputText value="#{row.ruValue}"/>
+            </p:column>
+            <p:column filterBy="#{row.arValue}" filterMatchMode="contains" sortBy="#{row.arValue}" headerText="AR">
+                <h:outputText value="#{row.arValue}"/>
+            </p:column>
+        </p:dataTable>
+    </ui:composition>
+</html>

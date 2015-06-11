@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <f:view>
@@ -21,187 +22,13 @@
 
                 <p:tabView id="tabsPanel" orientation="left">
                     <p:tab title="Upload">
-                        <p:fileUpload id="fileUpload" fileUploadListener="#{l10nHelper.uploadFile}"
-                                      disabled="#{not empty localizationTable.languageFiles}"
-                                      mode="advanced" multiple="true" fileLimit="#{l10nHelper.filesLimit}" dragDropSupport="true"
-                                      process="@this" update="@this :contentForm:tabsPanel :contentForm:growl"
-                                      sizeLimit="1000000" allowTypes="/(\.|\/)(properties)$/"/>
-                        <p:dataTable id="uploadedFilesTable" value="#{localizationTable.languageFiles}" var="file">
-                            <f:facet name="header">
-                                <p:commandButton id="removeFilesButton" value="Remove files"
-                                                 actionListener="#{l10nHelper.removeFiles()}"
-                                                 disabled="#{empty localizationTable.languageFiles}"
-                                                 process="@this" update="@this :contentForm:tabsPanel :contentForm:growl"/>
-                            </f:facet>
-                            <p:column headerText="File Name">
-                                <h:outputText value="#{file.fileName}"/>
-                            </p:column>
-                            <p:column headerText="File Size">
-                                <h:outputText value="#{file.fileSize} KB"/>
-                            </p:column>
-                            <p:column headerText="Translations">
-                                <h:outputText value="#{file.keysCount}"/>
-                            </p:column>
-                        </p:dataTable>
-                        <h:panelGroup id="saveButtonsPanel" layout="block">
-                            <h:commandButton value="Save EN" disabled="#{empty localizationTable.languageFiles}" styleClass="hButton">
-                                <p:fileDownload value="#{fileDownloadManager.englishFile}"/>
-                            </h:commandButton>
-                            <h:commandButton value="Save ES" disabled="#{empty localizationTable.languageFiles}" styleClass="hButton">
-                                <p:fileDownload value="#{fileDownloadManager.spanishFile}"/>
-                            </h:commandButton>
-                            <h:commandButton value="Save RU" disabled="#{empty localizationTable.languageFiles}" styleClass="hButton">
-                                <p:fileDownload value="#{fileDownloadManager.russianFile}"/>
-                            </h:commandButton>
-                            <h:commandButton value="Save AR" disabled="#{empty localizationTable.languageFiles}" styleClass="hButton">
-                                <p:fileDownload value="#{fileDownloadManager.arabicFile}"/>
-                            </h:commandButton>
-                        </h:panelGroup>
+                        <ui:include src="upload_tab.xhtml"/>
                     </p:tab>
                     <p:tab title="Localization table" disabled="#{empty localizationTable.languageFiles}">
-                        <p:dataTable id="localizationTable" value="#{localizationTable.localizationTableRows}" var="row"
-                                     paginator="true" paginatorPosition="both" pageLinks="10"
-                                     rows="25" rowsPerPageTemplate="10, 25, 50, 100, 500"
-                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PageLinks} {LastPageLink} {RowsPerPageDropdown}"
-                                     filteredValue="#{l10nHelper.filteredRows}"
-                                     resizableColumns="true"
-                                     sortBy="#{row.key}">
-                            <f:facet name="header">
-                                <h3><h:outputText value="Localization table"/></h3>
-                            </f:facet>
-                            <p:column headerText="#" style="width:36px">
-                                <h:outputText value="#{localizationTable.localizationTableRows.indexOf(row) + 1}"/>
-                            </p:column>
-                            <p:column filterBy="#{row.key}" filterMatchMode="contains" sortBy="#{row.key}" headerText="Key">
-                                <h:outputText value="#{row.key}"/>
-                            </p:column>
-                            <p:column filterBy="#{row.enValue}" filterMatchMode="contains" sortBy="#{row.enValue}" headerText="EN">
-                                <h:outputText value="#{row.enValue}"/>
-                            </p:column>
-                            <p:column filterBy="#{row.esValue}" filterMatchMode="contains" sortBy="#{row.esValue}" headerText="ES">
-                                <h:outputText value="#{row.esValue}"/>
-                            </p:column>
-                            <p:column filterBy="#{row.ruValue}" filterMatchMode="contains" sortBy="#{row.ruValue}" headerText="RU">
-                                <h:outputText value="#{row.ruValue}"/>
-                            </p:column>
-                            <p:column filterBy="#{row.arValue}" filterMatchMode="contains" sortBy="#{row.arValue}" headerText="AR">
-                                <h:outputText value="#{row.arValue}"/>
-                            </p:column>
-                        </p:dataTable>
+                        <ui:include src="localization_table_tab.xhtml"/>
                     </p:tab>
                     <p:tab title="Search" disabled="#{empty localizationTable.languageFiles}">
-                        <p:commandButton id="analyzeButton" value="Analyze"
-                                         actionListener="#{localizationAnalyzer.analyze()}"
-                                         process="@this" update="@this identicalValuesTable :contentForm:growl"/>
-                        <p:selectOneMenu id="searchTypeSelect" value="#{localizationAnalyzer.selectedSearchType}"
-                                         disabled="#{empty localizationTable.languageFiles}">
-                            <f:selectItem itemLabel="Identities" itemValue="IDENTITIES"/>
-                            <f:selectItem itemLabel="Spaces" itemValue="SPACES"/>
-                            <f:selectItem itemLabel="Unused keys" itemValue="UNUSED_KEYS"/>
-                            <p:ajax update="@this searchPanel :contentForm:growl" listener="#{localizationAnalyzer.analyze()}"/>
-                        </p:selectOneMenu>
-                        <p:selectOneMenu id="languageSelect" value="#{localizationAnalyzer.selectedLanguage}"
-                                         disabled="#{localizationAnalyzer.selectedSearchType == 'UNUSED_KEYS'}">
-                            <f:selectItem itemLabel="EN" itemValue="EN"/>
-                            <f:selectItem itemLabel="ES" itemValue="ES"/>
-                            <f:selectItem itemLabel="RU" itemValue="RU"/>
-                            <f:selectItem itemLabel="AR" itemValue="AR"/>
-                            <p:ajax update="@this searchPanel :contentForm:growl" listener="#{localizationAnalyzer.analyze()}"/>
-                        </p:selectOneMenu>
-                        <br/>
-                        <p:panel id="searchPanel">
-                            <p:dataTable id="identicalValuesTable" value="#{localizationAnalyzer.identicalValuesKeys}" var="key"
-                                         rendered="#{localizationAnalyzer.selectedSearchType == 'IDENTITIES'}"
-                                         paginator="true" paginatorPosition="both" pageLinks="10"
-                                         rows="25" rowsPerPageTemplate="10, 25, 50, 100, 500"
-                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PageLinks} {LastPageLink} {RowsPerPageDropdown}"
-                                         filteredValue="#{localizationAnalyzer.filteredIdenticalValues}"
-                                         resizableColumns="true">
-                                <f:facet name="header">
-                                    <h3><h:outputText value="Identities"/></h3>
-                                </f:facet>
-                                <p:column headerText="#" style="width:16px">
-                                    <h:outputText value="#{localizationAnalyzer.identicalValuesKeys.indexOf(key) + 1}"/>
-                                </p:column>
-                                <p:column style="width:16px">
-                                    <p:rowToggler/>
-                                </p:column>
-                                <p:column filterBy="#{key}" headerText="Value">
-                                    <h:outputText value="#{key}"/>
-                                </p:column>
-                                <p:rowExpansion>
-                                    <p:dataTable value="#{localizationAnalyzer.getRowByKey(key)}" var="row">
-                                        <p:column headerText="Key">
-                                            <h:outputText value="#{row.key}"/>
-                                        </p:column>
-                                        <p:column headerText="EN">
-                                            <h:outputText value="#{row.enValue}"/>
-                                        </p:column>
-                                        <p:column headerText="ES">
-                                            <h:outputText value="#{row.esValue}"/>
-                                        </p:column>
-                                        <p:column headerText="RU">
-                                            <h:outputText value="#{row.ruValue}"/>
-                                        </p:column>
-                                        <p:column headerText="AR">
-                                            <h:outputText value="#{row.arValue}"/>
-                                        </p:column>
-                                    </p:dataTable>
-                                </p:rowExpansion>
-                            </p:dataTable>
-                            <p:dataTable id="foundRows" value="#{localizationAnalyzer.foundRows}" var="row"
-                                         rendered="#{localizationAnalyzer.selectedSearchType == 'SPACES'}">
-                                <f:facet name="header">
-                                    <h3><h:outputText value="Spaces"/></h3>
-                                </f:facet>
-                                <p:column headerText="#" style="width:16px">
-                                    <h:outputText value="#{localizationAnalyzer.foundRows.indexOf(row) + 1}"/>
-                                </p:column>
-                                <p:column headerText="Key">
-                                    <h:outputText value="#{row.key}"/>
-                                </p:column>
-                                <p:column headerText="EN" rendered="#{localizationAnalyzer.selectedLanguage == 'EN'}">
-                                    <h:outputText value="#{row.enValue}"/>
-                                </p:column>
-                                <p:column headerText="ES" rendered="#{localizationAnalyzer.selectedLanguage == 'ES'}">
-                                    <h:outputText value="#{row.esValue}"/>
-                                </p:column>
-                                <p:column headerText="RU" rendered="#{localizationAnalyzer.selectedLanguage == 'RU'}">
-                                    <h:outputText value="#{row.ruValue}"/>
-                                </p:column>
-                                <p:column headerText="AR" rendered="#{localizationAnalyzer.selectedLanguage == 'AR'}">
-                                    <h:outputText value="#{row.arValue}"/>
-                                </p:column>
-                            </p:dataTable>
-                            <p:dataTable id="unusedKeys" value="#{localizationAnalyzer.unusedKeys}" var="row"
-                                         rendered="#{localizationAnalyzer.selectedSearchType == 'UNUSED_KEYS'}"
-                                         paginator="true" paginatorPosition="both" pageLinks="10"
-                                         rows="25" rowsPerPageTemplate="10, 25, 50, 100, 500"
-                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PageLinks} {LastPageLink} {RowsPerPageDropdown}"
-                                         sortBy="#{row.key}">
-                                <f:facet name="header">
-                                    <h3><h:outputText value="Unused keys"/></h3>
-                                </f:facet>
-                                <p:column headerText="#" style="width:16px">
-                                    <h:outputText value="#{localizationAnalyzer.unusedKeys.indexOf(row) + 1}"/>
-                                </p:column>
-                                <p:column sortBy="#{row.key}" headerText="Key">
-                                    <h:outputText value="#{row.key}"/>
-                                </p:column>
-                                <p:column headerText="EN">
-                                    <h:outputText value="#{row.enValue}"/>
-                                </p:column>
-                                <p:column headerText="ES">
-                                    <h:outputText value="#{row.esValue}"/>
-                                </p:column>
-                                <p:column headerText="RU">
-                                    <h:outputText value="#{row.ruValue}"/>
-                                </p:column>
-                                <p:column headerText="AR">
-                                    <h:outputText value="#{row.arValue}"/>
-                                </p:column>
-                            </p:dataTable>
-                        </p:panel>
+                        <ui:include src="search_tab.xhtml"/>
                     </p:tab>
                 </p:tabView>
             </h:form>
