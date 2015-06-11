@@ -50,7 +50,7 @@
                         <p:column headerText="Key">
                             <h:outputText value="#{row.key}"/>
                         </p:column>
-                        <p:column headerText="EN">
+                        <p:column headerText="EN" >
                             <h:outputText value="#{row.enValue}"/>
                         </p:column>
                         <p:column headerText="ES">
@@ -66,54 +66,35 @@
                 </p:rowExpansion>
             </p:dataTable>
             <p:dataTable id="foundRows" value="#{localizationAnalyzer.foundRows}" var="row"
-                         rendered="#{localizationAnalyzer.selectedSearchType == 'SPACES'}">
-                <f:facet name="header">
-                    <h3><h:outputText value="Spaces"/></h3>
-                </f:facet>
-                <p:column headerText="#" style="width:16px">
-                    <h:outputText value="#{localizationAnalyzer.foundRows.indexOf(row) + 1}"/>
-                </p:column>
-                <p:column headerText="Key">
-                    <h:outputText value="#{row.key}"/>
-                </p:column>
-                <p:column headerText="EN" rendered="#{localizationAnalyzer.selectedLanguage == 'EN'}">
-                    <h:outputText value="#{row.enValue}"/>
-                </p:column>
-                <p:column headerText="ES" rendered="#{localizationAnalyzer.selectedLanguage == 'ES'}">
-                    <h:outputText value="#{row.esValue}"/>
-                </p:column>
-                <p:column headerText="RU" rendered="#{localizationAnalyzer.selectedLanguage == 'RU'}">
-                    <h:outputText value="#{row.ruValue}"/>
-                </p:column>
-                <p:column headerText="AR" rendered="#{localizationAnalyzer.selectedLanguage == 'AR'}">
-                    <h:outputText value="#{row.arValue}"/>
-                </p:column>
-            </p:dataTable>
-            <p:dataTable id="unusedKeys" value="#{localizationAnalyzer.unusedKeys}" var="row"
-                         rendered="#{localizationAnalyzer.selectedSearchType == 'UNUSED_KEYS'}"
+                         rendered="#{localizationAnalyzer.selectedSearchType == 'UNUSED_KEYS' or
+                                     localizationAnalyzer.selectedSearchType == 'SPACES'}"
                          paginator="true" paginatorPosition="both" pageLinks="10"
                          rows="25" rowsPerPageTemplate="10, 25, 50, 100, 500"
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PageLinks} {LastPageLink} {RowsPerPageDropdown}"
                          sortBy="#{row.key}">
                 <f:facet name="header">
-                    <h3><h:outputText value="Unused keys"/></h3>
+                    <h3><h:outputText value="Found"/></h3>
                 </f:facet>
                 <p:column headerText="#" style="width:16px">
-                    <h:outputText value="#{localizationAnalyzer.unusedKeys.indexOf(row) + 1}"/>
+                    <h:outputText value="#{localizationAnalyzer.foundRows.indexOf(row) + 1}"/>
                 </p:column>
                 <p:column sortBy="#{row.key}" headerText="Key">
                     <h:outputText value="#{row.key}"/>
                 </p:column>
-                <p:column headerText="EN">
+                <p:column headerText="EN" rendered="#{localizationAnalyzer.selectedSearchType != 'UNUSED_KEYS' and
+                                                      localizationAnalyzer.selectedLanguage == 'EN'}">
                     <h:outputText value="#{row.enValue}"/>
                 </p:column>
-                <p:column headerText="ES">
+                <p:column headerText="ES" rendered="#{localizationAnalyzer.selectedSearchType != 'UNUSED_KEYS' and
+                                                      localizationAnalyzer.selectedLanguage == 'ES'}">
                     <h:outputText value="#{row.esValue}"/>
                 </p:column>
-                <p:column headerText="RU">
+                <p:column headerText="RU" rendered="#{localizationAnalyzer.selectedSearchType != 'UNUSED_KEYS' and
+                                                      localizationAnalyzer.selectedLanguage == 'RU'}">
                     <h:outputText value="#{row.ruValue}"/>
                 </p:column>
-                <p:column headerText="AR">
+                <p:column headerText="AR" rendered="#{localizationAnalyzer.selectedSearchType != 'UNUSED_KEYS' and
+                                                      localizationAnalyzer.selectedLanguage == 'AR'}">
                     <h:outputText value="#{row.arValue}"/>
                 </p:column>
             </p:dataTable>

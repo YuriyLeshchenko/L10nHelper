@@ -27,7 +27,6 @@ public class LocalizationAnalyzer implements Serializable {
     private List<LocalizationTableRow> filteredIdenticalValues;
     private List<LocalizationTableRow> foundRows;
     private final String pathToProject = "/home/yuriy/work/mcweb/src";
-    private List<LocalizationTableRow> unusedKeys;
     private Boolean isUsedKey;
 
     public void analyze() {
@@ -104,14 +103,14 @@ public class LocalizationAnalyzer implements Serializable {
     }
 
     private void findUnusedKeys() {
-        unusedKeys = new ArrayList<>();
+        foundRows = new ArrayList<>();
         for (LocalizationTableRow row : localizationTable.getLocalizationTableRows()) {
             if (!row.getKey().contains(".") && !row.getKey().startsWith("menu_") && !row.getKey().startsWith("email_")) {
                 try {
                     isUsedKey = false;
                     searchUnusedKeys(pathToProject, row.getKey());
                     if (!isUsedKey) {
-                        unusedKeys.add(row);
+                        foundRows.add(row);
                         System.out.println(row.getKey());
                     }
                 } catch (IOException ex) {
@@ -186,9 +185,5 @@ public class LocalizationAnalyzer implements Serializable {
 
     public List<LocalizationTableRow> getFoundRows() {
         return foundRows;
-    }
-
-    public List<LocalizationTableRow> getUnusedKeys() {
-        return unusedKeys;
     }
 }
