@@ -28,7 +28,7 @@
                 <h:outputText value="#{file.keysCount}"/>
             </p:column>
         </p:dataTable>
-        <h:panelGroup id="saveButtonsPanel" layout="block">
+        <p:fieldset id="saveSortedPanel" legend="Save sorted">
             <h:commandButton value="Save EN" disabled="#{empty localizationTable.languageFiles}" styleClass="hButton">
                 <p:fileDownload value="#{fileDownloadManager.englishFile}"/>
             </h:commandButton>
@@ -41,6 +41,6 @@
             <h:commandButton value="Save AR" disabled="#{empty localizationTable.languageFiles}" styleClass="hButton">
                 <p:fileDownload value="#{fileDownloadManager.arabicFile}"/>
             </h:commandButton>
-        </h:panelGroup>
+        </p:fieldset>
     </ui:composition>
 </html>
