@@ -29,16 +29,16 @@
             </p:column>
         </p:dataTable>
         <p:fieldset id="saveSortedPanel" legend="Save sorted">
-            <h:commandButton value="Save EN" disabled="#{empty localizationTable.languageFiles}" styleClass="hButton">
+            <h:commandButton value="Save EN" disabled="#{empty localizationTable.languageFiles}">
                 <p:fileDownload value="#{fileDownloadManager.englishFile}"/>
             </h:commandButton>
-            <h:commandButton value="Save ES" disabled="#{empty localizationTable.languageFiles}" styleClass="hButton">
+            <h:commandButton value="Save ES" disabled="#{empty localizationTable.languageFiles}">
                 <p:fileDownload value="#{fileDownloadManager.spanishFile}"/>
             </h:commandButton>
-            <h:commandButton value="Save RU" disabled="#{empty localizationTable.languageFiles}" styleClass="hButton">
+            <h:commandButton value="Save RU" disabled="#{empty localizationTable.languageFiles}">
                 <p:fileDownload value="#{fileDownloadManager.russianFile}"/>
             </h:commandButton>
-            <h:commandButton value="Save AR" disabled="#{empty localizationTable.languageFiles}" styleClass="hButton">
+            <h:commandButton value="Save AR" disabled="#{empty localizationTable.languageFiles}">
                 <p:fileDownload value="#{fileDownloadManager.arabicFile}"/>
             </h:commandButton>
         </p:fieldset>
